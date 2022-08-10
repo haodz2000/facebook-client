@@ -1,0 +1,22 @@
+.wrapper{
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &:hover{
+        background-color: red;
+    }
+}
+.image{
+    width: 36px ;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+.title{
+    font-size: 1.5rem;
+    color: var(--primary-text);
+    font-weight: 500;
+}

@@ -1,0 +1,17 @@
+.wrapper{
+    width: 100vw;
+    height: 100vw;
+    background-color: var(--body-color);
+    overflow-y: scroll;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.container{
+    margin-top: 56px;
+    width: 100%;
+    display: flex;
+}
+.content{
+    width: 100%;
+    display: flex;
+}

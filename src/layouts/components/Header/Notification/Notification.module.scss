@@ -1,0 +1,119 @@
+.item{
+    width: 40px;
+    height: 40px;
+    text-align: right;
+    background-color: var(--secondary-button-background);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right:5px;
+    cursor: pointer;
+    &:hover{
+        background-color: rgba(190, 190, 190,0.8);
+    }
+    position: relative;
+}
+.badgeIcon{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -4px;
+    right: 0;
+    background-color: var(--notification-badge);
+    color: var(--white);
+    font-size: 1.3rem;
+    font-weight: 400;
+    border-radius: 50%;
+}
+.active{
+    background-color: rgba(136, 221, 255, 0.3);
+    .icon{
+        color: var(--primary);
+    }
+}
+.notifications{
+    margin-top: -2px;
+    width: 360px;
+}
+.container{
+    padding: 0 16px 0 10px;
+    max-height: calc(100vh - 56px - 100px);
+    overflow-y: scroll;
+}
+.header{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    .top{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .title{
+        font-size: 2.4rem;
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+    .more{
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover{
+            background-color: var(--secondary-button-background);
+        }
+    }
+    .bottom{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .option{
+        padding: 5px 12px;
+        border-radius: 16px;
+        margin-right: 10px;
+        font-size: 1.5rem;
+        font-weight: 500;
+        cursor: pointer;
+        &:hover{
+            background-color: var(--secondary-button-background);
+        }
+    }
+    .select{
+        background-color: #E7FAFF;
+        span{
+            color: #1877f2;
+        }
+    }
+}
+.new{
+    display: flex;
+    flex-direction: column;
+    .top{
+        width: 328px;
+        height: 21px;
+        display: flex;
+        justify-content: space-between;
+        span{
+            font-size: 1.7rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        a{
+            color: var(--primary);
+        }
+    }
+}
+.content{
+    display: flex;
+    flex-direction: column;
+}

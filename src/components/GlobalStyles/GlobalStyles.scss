@@ -1,0 +1,51 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+:root{
+    --primary: #1b74e4;
+    --body-color: #f0f2f5;
+    --white: #ffffff;
+    --green: #42b72a;
+    --comment-background:#e1e2e3;
+    // Text
+    -gray-icon: #e4e6eb;
+
+    --primary-text:#050505;
+    --secondary-text: #65676b;
+    --text-black: #1c1e21;
+    --text-white:#ffffff;
+
+    // Button
+    --secondary-button-background: #E4E6EB;
+    --primary-button-text: #f0f2f5;
+    --secondary-button-text: #050505;
+
+    --notification-badge: #e41e3f;
+    // popper 
+    --popover-background: #ffffff;
+
+    --shadow-2 : rgba(0, 0, 0, 0.2);
+    --radius-circle: 50%;
+    --button-corner-radius: 6px;
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+html {
+    font-size: 62.5%;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizespeed;
+    background-color: var(--body-color);
+    overflow-x: hidden;
+}
+a{
+    text-decoration: none;
+}
+[contentEditable=true]:empty:before{
+    color: var(--secondary-text);
+    content:attr(placeholder)
+}

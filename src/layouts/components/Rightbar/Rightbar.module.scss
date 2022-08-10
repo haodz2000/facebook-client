@@ -1,0 +1,115 @@
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.centerRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.centerCol{
+    display: flex;
+    flex-direction: column;
+}
+.wrapper{
+    position: fixed;
+    flex: 3;
+    box-sizing: border-box;
+    height: calc(100vh - 16px - 56px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: block;
+}
+.container{
+    width: 360px;
+    box-sizing: border-box;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    span{
+        font-size: 1.7rem;
+        color: var(--secondary-text);
+        font-weight: 500;
+    }
+    margin: 5px 0px 5px;
+}
+.advertisements{
+    display: flex;
+    padding: 0 0 10px 0;
+    flex-direction: column;
+    border-bottom: 2px solid rgb(194, 194, 194);
+    .advertisement{
+        margin-bottom: 5px;
+        display: flex;
+        border-radius: 8px;
+        cursor: pointer;
+        &:hover{
+            background-color: var(--comment-background);
+        }
+    }
+    .info{
+        width: 328px;
+        height: 132px;
+    }
+    .banner{
+        width: 132px;
+        height: 132px;
+        border-radius: 8px;
+    }
+    .title{
+        width: 150px;
+        margin-left: 10px;
+        box-sizing: border-box;
+        word-break: break-word;
+        p{
+            color: var(--primary-text);
+            font-weight: 600;
+        }
+        span{
+            font-size: 1.2rem;
+            color: var(--secondary-text);
+            font-weight: 300;
+        }
+    }
+}
+.pages{
+    padding: 5px 0px 10px 0px;
+    border-bottom: 2px solid rgb(194, 194, 194);
+    .item{
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 8px;
+        &:hover{
+            background-color: var(--comment-background);
+        }
+        span{
+            margin-left: 10px;
+            font-size: 1.5rem;
+            color: var(--primary-text);
+            font-weight: 500;
+        }
+    }
+    
+}
+.addFriend{
+    .header{
+        display: flex;
+        justify-content: space-between;
+        .link{
+            span{
+                color: var(--primary);
+                font-weight: 400;
+            }
+        }
+    }
+    border-bottom: 2px solid rgb(194, 194, 194);
+}

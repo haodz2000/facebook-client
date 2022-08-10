@@ -1,0 +1,28 @@
+.wrapper{
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: var(--body-color);
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.container{
+    margin-top: 56px;
+    padding: 16px 0 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.sidebar{
+    flex: 3;
+}
+.content{
+    padding: 0 32px;
+    flex: 6;
+    display: flex;
+}
+.rightbar{
+    flex: 3;
+}
+
