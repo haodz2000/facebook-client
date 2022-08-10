@@ -11,9 +11,10 @@ import Image from '../Image'
 import images from '~/assets/images'
 const cx = classNames.bind(styles)
 const Share = () => {
+  const currentUser = useSelector((state)=>state.user.currentUser)
   const openShare = useSelector((state)=>state.share.open)
   const dispatch = useDispatch();
-
+  console.log(currentUser);
   const openBoxShare = ()=>{
       dispatch(open())
   }
@@ -22,7 +23,7 @@ const Share = () => {
           <div className={cx('container')}>
             <div className={cx('top')}>
                 <Image className={cx('avatar')} src={images.avatar}/>
-                <div onClick={openBoxShare} className={cx('feel')}><span>Hào ơi, bạn đang nghĩ gì thế?</span></div>
+                <div onClick={openBoxShare} className={cx('feel')}><span>{currentUser?.firstName} ơi, bạn đang nghĩ gì thế?</span></div>
             </div>
             <div className={cx('bottom')}>
                 <button className={cx('btn')}>

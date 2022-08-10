@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const userRequest = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: process.env.REACT_APP_BASE_URL||"https://facebook-api-server.herokuapp.com/api/",
     headers:{
         token: "Bearer" + localStorage.getItem("user")?JSON.parse(localStorage.getItem("user"))?.accessToken:"",
     }
