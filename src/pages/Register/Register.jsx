@@ -1,23 +1,17 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './Register.module.scss';
-
+import React, {useState } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faXmarkCircle } from '@fortawesome/free-regular-svg-icons';
-
-
 import "flatpickr/dist/themes/material_green.css";
-import Flatpickr from "react-flatpickr";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faCircleExclamation, faCircleQuestion, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Tippy from '@tippyjs/react';
+import Flatpickr from "react-flatpickr";
+import classNames from 'classnames/bind';
+
+import styles from './Register.module.scss';
 import Button from '~/components/Button';
-
-
 import * as authService from "~/services/authService"
 import removeAccents from '~/utils/removeAccents';
-import Tippy from '@tippyjs/react';
 
 const cx = classNames.bind(styles);
 const Register = () => {
@@ -176,14 +170,17 @@ const Register = () => {
                 <div className={cx('policy')}>
                     <p>
                         Người dùng dịch vụ của chúng tôi có thể đã tải thông tin liên hệ của bạn lên Facebook.
-                        <a href="#">Tìm hiểu thêm.</a>
+                        <a href="#a">Tìm hiểu thêm.</a>
                     </p>
                     <p>
-                        Bằng cách nhấp vào Đăng ký, bạn đồng ý với <a href="#">Điều khoản, Chính sách quyền riêng tư</a>{' '}
-                        và <a href="#">Chính sách cookie</a> của chúng tôi. Bạn có thể nhận được thông báo của chúng tôi
+                        Bằng cách nhấp vào Đăng ký, bạn đồng ý với <a href="#a">Điều khoản, Chính sách quyền riêng tư</a>{' '}
+                        và <a href="#a">Chính sách cookie</a> của chúng tôi. Bạn có thể nhận được thông báo của chúng tôi
                         qua SMS và hủy nhận bất kỳ lúc nào.
                     </p>
                 </div>
+                {
+                    isError&&(<div className={cx('error')}>Đăng kí thất bại</div>)
+                }
                 <div className={cx('bottom')}>
                     <Button className={cx('btn-register')} onClick={handleSubmit}>
                         {isRegister?(<><FontAwesomeIcon className={cx('spinner')} icon={faSpinner} />Đang xử lý</>):"Đăng ký"}

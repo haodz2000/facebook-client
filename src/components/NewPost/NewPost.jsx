@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
-import styles from './NewPost.module.scss';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import app from '~/firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSmile } from '@fortawesome/free-regular-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import {
     faCircleCheck,
     faEarthAsia,
@@ -15,15 +15,15 @@ import {
     faSpinner,
     faUserTag,
 } from '@fortawesome/free-solid-svg-icons';
-
 import { useSelector, useDispatch } from 'react-redux';
+import Tippy from '@tippyjs/react';
+
+import app from '~/firebase/firebase';
+import styles from './NewPost.module.scss';
 import * as postService from "~/services/postService"
 import {close } from '~/redux/features/shareSlice';
 import Image from '../Image';
 import images from '~/assets/images';
-import { faSmile } from '@fortawesome/free-regular-svg-icons';
-import Tippy from '@tippyjs/react';
-import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 const NewPost = () => {
     const navigate = useNavigate();
@@ -59,7 +59,7 @@ const NewPost = () => {
         if(file.length > 0){
             setNewPost({...newPost,background:false})
         }
-    },[file])
+    },[newPost,file])
     useEffect(()=>{
         if(newPost.desc !==""||file.length > 0){
             setActive(true)
@@ -69,7 +69,7 @@ const NewPost = () => {
     },[newPost,file])
     const handleHidden = () => {
         file.map((item, index) => {
-            item && URL.revokeObjectURL(item.preview);
+           return item && URL.revokeObjectURL(item.preview);
         });
         setFile([]);
         setOpen(false);
@@ -82,8 +82,6 @@ const NewPost = () => {
                 const uploadTask = uploadBytesResumable(storageRef, file[0], metadata);
                 uploadTask.on('state_changed',
                 (snapshot) => {
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 switch (snapshot.state) {
                 case 'paused':
                     break;
@@ -116,7 +114,7 @@ const NewPost = () => {
             }
             else{
                 const post = newPost;
-                const res = await postService.post(post)
+                await postService.post(post)
                 setIsFetching(false)
                 dispatch(close())
                 navigate("/")
@@ -166,39 +164,37 @@ const NewPost = () => {
                         {open && (
                             <div className={cx('boxImage')}>
                                 <div className={cx('containerImage')}>
-                                    {true && (
-                                        <label htmlFor={file.length===0?"file":""}>
-                                            <div
-                                                className={cx('image', {
-                                                    'bg-gray': file.length === 0,
-                                                })}
-                                            >
-                                                {file.length === 0 && (
-                                                    <>
-                                                        <div className={cx('div')}>
-                                                            <FontAwesomeIcon icon={faImage} />
-                                                        </div>
-                                                        <p>Thêm ảnh/video</p>
-                                                        <span>hoặc kéo và thả</span>
-                                                    </>
-                                                )}
-                                                {file.length > 0 && (
-                                                    <div className={cx('imagePreview')}>
-                                                        {file.map((item, index) => (
-                                                            <Image
-                                                                className={cx('imgPre', 'imgMul')}
-                                                                key={index}
-                                                                src={item.preview}
-                                                            />
-                                                        ))}
+                                    <label htmlFor={file.length===0?"file":""}>
+                                        <div
+                                            className={cx('image', {
+                                                'bg-gray': file.length === 0,
+                                            })}
+                                        >
+                                            {file.length === 0 && (
+                                                <>
+                                                    <div className={cx('div')}>
+                                                        <FontAwesomeIcon icon={faImage} />
                                                     </div>
-                                                )}
-                                                <div onClick={handleHidden} className={cx('hidden')}>
-                                                    <FontAwesomeIcon icon={faRemove} />
+                                                    <p>Thêm ảnh/video</p>
+                                                    <span>hoặc kéo và thả</span>
+                                                </>
+                                            )}
+                                            {file.length > 0 && (
+                                                <div className={cx('imagePreview')}>
+                                                    {file.map((item, index) => (
+                                                        <Image
+                                                            className={cx('imgPre', 'imgMul')}
+                                                            key={index}
+                                                            src={item.preview}
+                                                        />
+                                                    ))}
                                                 </div>
+                                            )}
+                                            <div onClick={handleHidden} className={cx('hidden')}>
+                                                <FontAwesomeIcon icon={faRemove} />
                                             </div>
-                                        </label>
-                                    )}
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                         )}

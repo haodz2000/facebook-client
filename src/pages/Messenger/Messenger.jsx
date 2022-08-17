@@ -1,18 +1,18 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef,useState } from 'react'
 import classNames from 'classnames/bind'
-import styles from "./Messenger.module.scss"
+import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleInfo, faGift, faImage, faPaperPlane, faPhone, faPlusCircle, faSmile, faVideo } from '@fortawesome/free-solid-svg-icons'
 import EmojiPicker from 'emoji-picker-react'
+
+import styles from './Messenger.module.scss'
 import Conversations from '~/components/Conversations'
 import Image from '~/components/Image'
 import images from '~/assets/images'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleInfo, faGift, faImage, faPaperPlane, faPhone, faPlusCircle, faSmile, faVideo } from '@fortawesome/free-solid-svg-icons'
 import Message from '~/components/Message/Message'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
-import * as consService from "~/services/consService"
-import * as userService from "~/services/userService"
+import * as consService from '~/services/consService'
+import * as userService from '~/services/userService'
 import Right from './Right/Right'
 const cx = classNames.bind(styles)
 const Messenger = () => {
@@ -23,7 +23,6 @@ const Messenger = () => {
     const [openEmoji,setOpenEmoji]= useState(false)
     const scrollRef = useRef();
     const inputRef = useRef();
-    const [file,setFile] = useState();
     const [cons,setCons] = useState({})
     const [message,setMessage] = useState({
         conversationId: "",
@@ -79,7 +78,7 @@ const Messenger = () => {
             conversationId: cons?._id,
             senderId: currentUser._id,
             receiverId : user?._id,
-            message: e.target.innerText,
+            message: e.target.innerHTML,
             image: ""
         })
     }
@@ -187,7 +186,7 @@ const Messenger = () => {
                 </div>
             </div>
             <div className={cx('right')}>
-                <Right/>
+                <Right user={user} />
             </div>
         </div>
     </div>

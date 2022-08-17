@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import classNames from "classnames/bind"
 import styles from "./Login.module.scss"
 import Button from '~/components/Button';
@@ -9,12 +9,9 @@ import Register from '~/pages/Register';
 import { useDispatch, useSelector } from 'react-redux';
 import Tippy from '@tippyjs/react';
 import * as authService from "~/services/authService"
-import { useLocation, useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles)
 const Login = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation().pathname;
     const [open, setOpen] = useState(false);
     const isLogin = useSelector((state)=>state.user.isFetching);
     const isError = useSelector((state)=>state.user.error);

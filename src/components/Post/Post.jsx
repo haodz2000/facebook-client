@@ -1,19 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
-import classNames from 'classnames/bind'
-import styles from "./Post.module.scss"
-import Image from '../Image'
-import images from '~/assets/images'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera, faCircleCheck, faEllipsis, faGlobeAsia,faShare, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { faFaceSmile, faMessage } from '@fortawesome/free-regular-svg-icons'
-import Tippy from '@tippyjs/react'
-import Button from '../Button'
-import { faThumbsUp } from '@fortawesome/free-regular-svg-icons'
-import Comment from '~/components/Comment'
-import * as userService from "~/services/userService"
-import * as postService from "~/services/postService"
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera, faCircleCheck, faEllipsis, faGlobeAsia,faShare, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faFaceSmile, faMessage } from '@fortawesome/free-regular-svg-icons';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Tippy from '@tippyjs/react';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+
+import styles from './Post.module.scss';
+import Image from '../Image';
+import images from '~/assets/images';
+import Button from '../Button';
+import Comment from '~/components/Comment';
+import * as userService from '~/services/userService';
+import * as postService from '~/services/postService';
 const cx = classNames.bind(styles)
 const Post = ({item}) => {
     const currentUser = useSelector((state)=>state.user.currentUser)
@@ -191,7 +193,7 @@ const Post = ({item}) => {
             </div>
             <div className={cx('bottom')}>
                 <div className={cx('userComment')}>
-                    <Image className={cx('avatar')} src={images.avatar}/>
+                    <Image className={cx('avatar')} src={currentUser?.avatar||images.avatar}/>
                     <div className={cx('boxInput')}>
                         <div
                             onKeyPress={handlePress}
@@ -234,5 +236,8 @@ const Post = ({item}) => {
     </div>
   )
 }
+Post.propTypes = {
+    item: PropTypes.object.isRequired
+}
 
-export default Post
+export default Post;

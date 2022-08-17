@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import styles from "./Comment.module.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -34,5 +35,7 @@ const Comment = ({data}) => {
     </div>
   )
 }
-
+Comment.propTypes ={
+    data : PropTypes.object.isRequired
+}
 export default Comment

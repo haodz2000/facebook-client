@@ -24,7 +24,7 @@ const Header = () => {
     const Socket = useRef()
     const socket = useSelector((state)=>state.socket.socket)
     useEffect(()=>{
-        Socket.current = io("ws://localhost:8900")
+        Socket.current = io("https://facebook-api-server.herokuapp.com/")
         if(Socket.current){
             dispatch(connect(Socket))
         }

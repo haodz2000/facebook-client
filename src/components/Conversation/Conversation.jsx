@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
-import styles from "./Conversation.module.scss"
-import { Link } from 'react-router-dom'
-import Image from '~/components/Image'
 import { useSelector } from 'react-redux'
 import { useEffect,useState } from 'react'
+
+import styles from "./Conversation.module.scss"
+import Image from '~/components/Image'
 import * as userService from "~/services/userService"
 const cx = classNames.bind(styles)
 const Conversation = ({data}) => {
@@ -53,5 +54,7 @@ const Conversation = ({data}) => {
     </div>
   )
 }
-
-export default Conversation
+Conversation.propTypes = {
+    data: PropTypes.object.isRequired
+}
+export default Conversation;

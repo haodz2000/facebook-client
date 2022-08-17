@@ -28,7 +28,7 @@ const Feed = ({userId,onlyUser}) => {
           }
       }
       fetchPost()
-  },[userId])
+  },[user,userId,onlyUser])
   return (
     <div className={cx('wrapper')}>
     { user._id=== userId&&<Share/>}
@@ -42,6 +42,7 @@ const Feed = ({userId,onlyUser}) => {
 }
 
 Feed.propTypes = {
-    userId : PropTypes.string
+    userId : PropTypes.string,
+    onlyUser: PropTypes.bool
 }
 export default Feed;

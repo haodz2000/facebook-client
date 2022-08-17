@@ -1,11 +1,11 @@
 import React from 'react'
-import { useState,useEffect } from 'react'
+import PropTypes from 'prop-types';
+import Tippy from '@tippyjs/react'
 import classNames from 'classnames/bind'
+
 import styles from "./Message.module.scss"
 import Image from '../Image'
 import images from '~/assets/images'
-import * as userService from "~/services/userService"
-import Tippy from '@tippyjs/react'
 const cx = classNames.bind(styles)
 const Message = ({msg,own,user}) => {
   return (
@@ -28,7 +28,7 @@ const Message = ({msg,own,user}) => {
                   <div className={cx('text')}>
                       <span>
                         {
-                            msg.message
+                            msg?.message
                         }
                       </span>
                   </div>
@@ -38,5 +38,9 @@ const Message = ({msg,own,user}) => {
     </div>
   )
 }
-
+Message.propTypes = {
+  msg: PropTypes.object,
+  user: PropTypes.object,
+  own: PropTypes.bool
+}
 export default Message

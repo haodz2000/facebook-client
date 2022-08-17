@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
 import styles from "./Menu.module.scss";
 import Header from './Header';
 import * as authService from "~/services/authService"
-import {Wrapper as PopperWrapper} from "~/components/Popper"
+import {Wrapper as PopperWrapper} from "~/components/Popper";
 import MenuItem from './MenuItem';
 import Image from '~/components/Image';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles)
 const defaultFn = ()=>{}
 const Menu = ({items = [], reset, onChange = defaultFn}, {...attrs}) => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [history,setHistory] = useState([{data: items}]);
     const current = history[history.length - 1];
@@ -82,5 +81,8 @@ const Menu = ({items = [], reset, onChange = defaultFn}, {...attrs}) => {
     </div>
   )
 }
+Menu.propTypes ={
+    items: PropTypes.array
+}
 
-export default Menu
+export default Menu;
