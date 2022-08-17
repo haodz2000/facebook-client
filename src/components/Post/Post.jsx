@@ -1,10 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames/bind'
 import styles from "./Post.module.scss"
 import Image from '../Image'
 import images from '~/assets/images'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera, faCheck, faCircleCheck, faEllipsis, faGlobeAsia, faHeart,faShare, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faCircleCheck, faEllipsis, faGlobeAsia,faShare, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { faFaceSmile, faMessage } from '@fortawesome/free-regular-svg-icons'
 import Tippy from '@tippyjs/react'
 import Button from '../Button'
@@ -14,18 +14,22 @@ import * as userService from "~/services/userService"
 import * as postService from "~/services/postService"
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { async } from '@firebase/util'
 const cx = classNames.bind(styles)
 const Post = ({item}) => {
     const currentUser = useSelector((state)=>state.user.currentUser)
     const [post,setPost] = useState(item)
-    const [user,setUser] = useState(null)
+    const [user,setUser] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isLike, setIsLike]= useState(false)
+    const [comment, setComment] = useState({
+        userId: "",
+        postId: "",
+        desc: ""
+    })
     useEffect(()=>{
         const fetchUser = async()=>{
             const res = await userService.getUser(item?.userId)
-            setUser(res.data)
+            setUser(res.data.data)
         }
         fetchUser();
         setPost(item)
@@ -37,14 +41,8 @@ const Post = ({item}) => {
             setIsLike(false)
         }
     },[item,currentUser])
-    const [comment, setComment] = useState({
-        userId: "",
-        postId: "",
-        desc: ""
-    })
     const cmtRef = useRef();
-    const [comments,setComments] = useState([
-    ])
+    const [comments,setComments] = useState([])
     const handleClickLike = ()=>{
         const data = {
             postId: item._id,
@@ -59,32 +57,37 @@ const Post = ({item}) => {
     }
     const openComment = ()=>{
         setIsLoading(true)
-        setTimeout(()=>{
-            setComments([...comments,{
-                userId : "sdrfsghjkf",
-                text: "Xuat sac luon"
-            },
-            {
-                userId : "sdrfsghjkf",
-                text: "Cho xin job"
-            }])
+        const data = {
+            postId: post._id
+        }
+        const fetchComment = async()=>{
+            const res = await postService.loadComment(data);
+            setComments(res.data.sort((a,b)=>{
+                return new Date(b.createdAt)- new Date(a.createdAt)
+            }))
             setIsLoading(false)
-            
-        },2000)
+        }
+        fetchComment();
     }
     const handleInput = (e)=>{
         setComment({
             userId : currentUser._id,
             postId: post._id,
-            desc: e.target.innerText
+            desc: e.target.innerText.trim()
         })
     }
-    const handlePress = (e)=>{
+    const handlePress = async(e)=>{
         if(e.key === "Enter"&&!e.shiftKey){
             e.preventDefault()
-            setComments([comment,...comments])
-            setComment({})
-            cmtRef.current.innerText =""
+            if(comment.desc.trim() !==""){
+                const data = comment
+                const res = await postService.comment(data)
+                if(res.data){
+                    setComments([comment,...comments])
+                    setComment({})
+                    cmtRef.current.innerText =""
+                }
+            }
         }
     }
   return (
@@ -92,9 +95,9 @@ const Post = ({item}) => {
         <div className={cx('container')}>
             <div className={cx('header')}>
                 <div className={cx('left')}>
-                    <Link to={`/profile/@${user?.username}`} ><Image className={cx('avatar')} src={user?.avatar||images.avatar}/></Link>
+                    <Link to={`/profile/${user?._id}`} ><Image className={cx('avatar')} src={user?.avatar||images.avatar}/></Link>
                     <div className={cx('info')}>
-                        <Link to={`/profile/@${user?.username}`}>
+                        <Link to={`/profile/${user?._id}`}>
                             <div className={cx('name')}>
                                 <span>{user?.fullName}</span>
                                 <FontAwesomeIcon className={cx('tick')} icon={faCircleCheck} />

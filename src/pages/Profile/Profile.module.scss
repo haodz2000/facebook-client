@@ -15,9 +15,6 @@
 .header{
     height: 630px;
     background-color: white;
-    .center{
-        flex: 8;
-    }
 }
 .cover-content,.posts{
     width: 1000px;
@@ -61,10 +58,9 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
-.content,.menu{
+.content,.menu,.aside,.feed{
     width: 1000px;
     box-sizing: border-box;
-    
     position: relative;
 }
 .content{
@@ -83,6 +79,24 @@
     flex-direction: row;
     align-items: center;
     padding: 0 0 15px 0;
+}
+.boxAvatar{
+    position: relative;
+    label{
+        position: absolute;
+        bottom: 5px;
+        right: 20px;
+    }
+    .btn-input-avatar{
+        width: 32px;
+        height: 32px;
+        background-color: var( --secondary-button-background);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        cursor: pointer;
+    }
 }
 .avatar{
     width: 164px;
@@ -108,7 +122,6 @@
         color: var(--secondary-text);
     }
 }
-
 .menu{
     padding: 0 0 0px 32px;
     display: flex;
@@ -156,9 +169,6 @@
         background-color: #dddddd;
     }
 }
-.center{flex: 8;
-        box-sizing: border-box;
-}
 
 .body{
     padding: 15px 0 0 32px;
@@ -167,6 +177,8 @@
     flex-direction: row;
 }
 .posts{
+    width: 1000px;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     float: left;

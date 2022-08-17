@@ -1,8 +1,7 @@
 .wrapper{
     width: 100vw;
-    height: 100vw;
+    height: 100vh;
     background-color: var(--body-color);
-    overflow-y: scroll;
     flex-direction: column;
     box-sizing: border-box;
 }

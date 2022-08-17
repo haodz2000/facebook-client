@@ -18,12 +18,11 @@ import {
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as postService from "~/services/postService"
-import { open, close } from '~/redux/features/shareSlice';
+import {close } from '~/redux/features/shareSlice';
 import Image from '../Image';
 import images from '~/assets/images';
 import { faSmile } from '@fortawesome/free-regular-svg-icons';
 import Tippy from '@tippyjs/react';
-import { async } from '@firebase/util';
 import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 const NewPost = () => {
@@ -34,7 +33,6 @@ const NewPost = () => {
     const metadata = {
         contentType: 'image/jpeg'
     };
-    const openShare = useSelector((state) => state.share.open);
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(false);
     const [file, setFile] = useState([]);
@@ -85,7 +83,7 @@ const NewPost = () => {
                 uploadTask.on('state_changed',
                 (snapshot) => {
                 // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 switch (snapshot.state) {
                 case 'paused':
                     break;
@@ -118,7 +116,6 @@ const NewPost = () => {
             }
             else{
                 const post = newPost;
-                console.log(post);
                 const res = await postService.post(post)
                 setIsFetching(false)
                 dispatch(close())
@@ -140,8 +137,8 @@ const NewPost = () => {
                         <Image className={cx('avatar')} src={images.avatar} />
                         <div className={cx('info')}>
                             <div className={cx('name')}>
-                                <span>Tạ Hữu Hào</span>
-                                <FontAwesomeIcon className={cx('tick')} icon={faCircleCheck} />
+                                <span>{user?.fullName}</span>
+                                {user?.tick&&<FontAwesomeIcon className={cx('tick')} icon={faCircleCheck} />}
                             </div>
                             <div className={cx('mode')}>
                                 <FontAwesomeIcon icon={faEarthAsia} /> <span>Công khai</span>
@@ -155,7 +152,7 @@ const NewPost = () => {
                             className={cx('desc')}
                             tabIndex={0}
                             contentEditable="true"
-                            placeholder="Hào ơi, bạn đang nghĩ gì thế "
+                            placeholder={` ${user?.firstName} ơi, bạn đang nghĩ gì thế `}
                             role="textbox"
                             aria-multiline="true"
                             spellCheck={false}

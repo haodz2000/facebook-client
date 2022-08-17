@@ -7,13 +7,25 @@ import Post from '~/components/Post'
 import { useSelector } from 'react-redux'
 import * as postService from "~/services/postService"
 const cx = classNames.bind(styles)
-const Feed = ({userId}) => {
+const Feed = ({userId,onlyUser}) => {
   const user = useSelector((state)=>state.user.currentUser)
-  const [posts,setPost] = useState([])
+  const [posts,setPosts] = useState([])
   useEffect(()=>{
-      const fetchPost = async()=>{
-          const res = await postService.getTimeline(userId||user._id)
-          setPost(res.data)
+        const fetchPost = async()=>{
+          if(onlyUser){
+            const res = await postService.getPostUser(userId)
+            const data = res.data.sort((a,b)=>{
+              return new Date(b.createdAt)- new Date(a.createdAt)
+            })
+            setPosts(data)
+          }
+          else{
+            const res = await postService.getTimeline(user._id)
+            const data = res.data.sort((a,b)=>{
+              return new Date(b.createdAt)- new Date(a.createdAt)
+            })
+            setPosts(data)
+          }
       }
       fetchPost()
   },[userId])

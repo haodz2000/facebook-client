@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames/bind'
 import styles from "./Comment.module.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck, faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import images from '~/assets/images'
 import Image from '~/components/Image'
 const cx = classNames.bind(styles)
@@ -18,9 +18,12 @@ const Comment = ({data}) => {
                 </div>
                 <div className={cx('desc')}>
                     <span>
-                        {data?.text||"Xuat sac luon"}
+                        {data?.desc}
                     </span>
                 </div>
+            </div>
+            <div className={cx('more','active')}>
+                <FontAwesomeIcon icon={faEllipsis}  />
             </div>
         </div>
         <div className={cx('foot')}>

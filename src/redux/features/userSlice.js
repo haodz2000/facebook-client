@@ -48,14 +48,37 @@ export const userSlice = createSlice({
         registerFailure:(state)=>{
             state.isFetching = false
             state.error = true
-        }
+        },
+        follow:(state,action)=>{
+            var user = action.payload.currentUser
+            const receiverId = action.payload.receiverId
+            user = {
+                ...user,
+                followings: [...user.followings,receiverId]
+            }
+            state.currentUser = user
+            storeItem("user",user)
+        },
+        unFollow:(state,action)=>{
+            var user = action.payload.currentUser
+            const receiverId = action.payload.receiverId
+            user = {
+                ...user,
+                followings: user.followings.filter(
+                    (following)=>following !== receiverId
+                )
+            }
+            state.currentUser = user
+            storeItem("user",user)
+        },
     }
 });
 
 export const {
     loginStart,loginSuccess,loginFailure,
     logoutStart, logoutSuccess, logoutFailure,
-    registerStart, registerSuccess, registerFailure
+    registerStart, registerSuccess, registerFailure,
+    follow, unFollow
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -6,66 +6,66 @@ import images from '~/assets/images';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import Groups from '~/components/Groups';
+import { useSelector } from 'react-redux';
 const cx = classNames.bind(styles)
-
-const pages = [
-    {
-        image : images.friend,
-        title: "Bạn bè",
-        to: "/"
-    },
-    {
-        image : images.game,
-        title: "Chơi game",
-        to: "/"
-    },
-    {
-        image : images.messenger,
-        title: "Messenger",
-        to: "/"
-    },
-    {
-        image : images.group,
-        title: "Nhóm",
-        to: "/"
-    },
-    {
-        image : images.marketplace,
-        title: "Marketplace",
-        to: "/"
-    },
-    
-]
-const groups = [
-    {
-        image : images.game,
-        title: "Lập trình F8 FullStack",
-        to: "/"
-    },
-    {
-        image : images.messenger,
-        title: "Bộ tộc Mixigaming",
-        to: "/"
-    },
-    {
-        image : images.messenger,
-        title: "SUPER TEAM - Hơn cả một đội bóng",
-        to: "/"
-    },
-    {
-        image : images.group,
-        title: "Hội những người yêu lập trình",
-        to: "/"
-    },
-    {
-        image : images.marketplace,
-        title: "Front-end Việt Nam",
-        to: "/"
-    },
-    
-]
 const Sidebar = () => {
+    const currentUser = useSelector((state)=>state.user.currentUser)
+    const pages = [
+        {
+            image : images.friend,
+            title: "Bạn bè",
+            to: "/"
+        },
+        {
+            image : images.game,
+            title: "Chơi game",
+            to: "/"
+        },
+        {
+            image : images.messenger,
+            title: "Messenger",
+            to: `/messenger/t/${currentUser._id}`
+        },
+        {
+            image : images.group,
+            title: "Nhóm",
+            to: "/"
+        },
+        {
+            image : images.marketplace,
+            title: "Marketplace",
+            to: "/"
+        },
+        
+    ]
+    const groups = [
+        {
+            image : images.game,
+            title: "Lập trình F8 FullStack",
+            to: "/"
+        },
+        {
+            image : images.messenger,
+            title: "Bộ tộc Mixigaming",
+            to: "/"
+        },
+        {
+            image : images.messenger,
+            title: "SUPER TEAM - Hơn cả một đội bóng",
+            to: "/"
+        },
+        {
+            image : images.group,
+            title: "Hội những người yêu lập trình",
+            to: "/"
+        },
+        {
+            image : images.marketplace,
+            title: "Front-end Việt Nam",
+            to: "/"
+        },
+        
+    ]
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>

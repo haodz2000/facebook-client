@@ -1,7 +1,8 @@
 const routes = {
-    profile :"/profile/@:username",
+    profile :"/profile/:username",
     home: "/",
     login :"/login",
+    messenger: "/messenger/t/:idConservation"
 }
 
 export default routes;

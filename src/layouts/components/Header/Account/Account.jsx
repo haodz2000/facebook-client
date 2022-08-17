@@ -84,6 +84,7 @@ const Account = () => {
         setReset(true)
     }
   return (
+    <div>
         <HeadlessTippy
             interactive
             visible={open}
@@ -98,6 +99,7 @@ const Account = () => {
                 </div>
             </Tippy>
         </HeadlessTippy>
+    </div>
   )
 }
 

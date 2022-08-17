@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
+import {io} from 'socket.io-client'
 import classNames from 'classnames/bind'
 import styles from "./Header.module.scss"
 import { Link, useLocation } from 'react-router-dom'
@@ -7,15 +8,41 @@ import Search from './Search'
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGamepad, faHome, faPeopleGroup, faShop, faTelevision, faMessage, faBell, faBars } from '@fortawesome/free-solid-svg-icons'
-import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons'
-import Image from '~/components/Image'
+import { faGamepad, faHome, faPeopleGroup, faShop, faTelevision, faBars } from '@fortawesome/free-solid-svg-icons'
+import {connect,getOnline} from "~/redux/features/socketSlice"
+// import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons'
+// import Image from '~/components/Image'
 import Notification from '~/layouts/components/Header/Notification';
 import Message from '~/layouts/components/Header/Message';
 import Account from '~/layouts/components/Header/Account'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRef } from 'react'
 const cx = classNames.bind(styles)
 const Header = () => {
-  const router = useLocation().pathname;
+  const dispatch = useDispatch()
+    const currentUser = useSelector((state)=>state.user.currentUser)
+    const Socket = useRef()
+    const socket = useSelector((state)=>state.socket.socket)
+    useEffect(()=>{
+        Socket.current = io("ws://localhost:8900")
+        if(Socket.current){
+            dispatch(connect(Socket))
+        }
+        return ()=>{
+            socket?.disconnect();
+            socket?.on("getOnlineUser",(users)=>{
+              dispatch(getOnline(users))
+            })
+        }
+    },[])
+    useEffect(()=>{
+        socket?.emit("addUser",currentUser._id)
+        socket?.on("getOnlineUser",(users)=>{
+            dispatch(getOnline(users))
+        })
+    },[currentUser,socket])
+  const router = useLocation().pathname.split("/");
+
   return (
     <header className={cx('wrapper')}>
       <div className={cx('container')}>
@@ -77,7 +104,7 @@ const Header = () => {
                   <FontAwesomeIcon className={cx('icon')} icon={faBars}/>
                 </div>
               </Tippy>
-              <Message/>
+              {!router?.includes("messenger")&&<Message/>}
               <Notification/>
               <Account/>
             </div>

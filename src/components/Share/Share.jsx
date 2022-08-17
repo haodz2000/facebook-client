@@ -14,7 +14,6 @@ const Share = () => {
   const currentUser = useSelector((state)=>state.user.currentUser)
   const openShare = useSelector((state)=>state.share.open)
   const dispatch = useDispatch();
-  console.log(currentUser);
   const openBoxShare = ()=>{
       dispatch(open())
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Rightbar.module.scss';
 import Image from '~/components/Image';
@@ -7,8 +7,28 @@ import images from '~/assets/images';
 import { Link } from 'react-router-dom';
 import MakeFriend from '~/components/MakeFriend';
 import OnlineUser from '~/components/OnlineUser';
+import { useSelector } from 'react-redux';
+import * as userService from "~/services/userService"
 const cx = classNames.bind(styles);
 const Rightbar = () => {
+    const [users, setUsers] = useState([]) 
+    const currentUser  = useSelector((state)=>state.user.currentUser)
+    const onlineUsers = useSelector((state)=>state.socket.online)
+    useEffect(()=>{
+        const fetchUsers = async()=>{
+            if(onlineUsers.length > 1){
+                const data ={
+                    online: onlineUsers
+                }
+                const res = await userService.getOnlineUsers(data);
+                setUsers(res.data.data)
+            }else{
+                const res = await userService.getUsers();
+                setUsers(res.data.data)
+            }
+        }
+        fetchUsers();
+    },[currentUser,onlineUsers])
     return(
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
@@ -68,9 +88,11 @@ const Rightbar = () => {
                         <span>Người liên hệ</span>
                     </div>
                     <div className={cx('OnlineUsers')}>
-                        <OnlineUser/>
-                        <OnlineUser/>
-                        <OnlineUser/>
+                        {
+                            users.map((user,index)=>(
+                                <OnlineUser user={user} key={index}/>
+                            ))
+                        }
                     </div>
                 </div>
             </div>

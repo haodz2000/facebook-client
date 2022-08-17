@@ -17,11 +17,38 @@ export const getTimeline = async(userId)=>{
     }
 }
 
+export const getPostUser = async(userId)=>{
+    try {
+        const res = await userRequest.get(`/post/posts/${userId}`)
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const like = async(data)=>{
     try {
         const res = await userRequest.put('post/like',data)
         return res;
     } catch (error) {
-        
+        console.log(error);
+    }
+}
+
+export const comment = async(data)=>{
+    try {
+        const res = await userRequest.post("post/comment",data)
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const loadComment = async(data)=>{
+    try {
+        const res = await userRequest.post("post/loadComment",data)
+        return res;
+    } catch (error) {
+        console.log(error)
     }
 }
